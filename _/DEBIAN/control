@@ -2,9 +2,9 @@ Package: com.greeny.jellylockclock8
 Name: JellyLockClock8
 Depends: mobilesubstrate
 Architecture: iphoneos-arm
-Description: An awesome MobileSubstrate tweak!
+Description: Replacement LS Clock
 Maintainer: GreenyDev <greenydev@greenmail.net.au>
 Author: GreenyDev <greenydev@greenmail.net.au>
 Section: Tweaks
-Version: 0.0.1-67
+Version: 0.0.1-71
 Installed-Size: 136

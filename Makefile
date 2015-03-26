@@ -11,4 +11,4 @@ JellyLockClock8_FRAMEWORKS = UIKit
 include $(THEOS_MAKE_PATH)/tweak.mk
 
 after-install::
-	install.exec "killall -9 backboardd"
+	install.exec "killall -9 backboardd" || "killall -9 SpringBoard"

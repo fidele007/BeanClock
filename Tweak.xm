@@ -22,7 +22,7 @@ static void loadPreferences() {
     NSLog(@"User's current time in their preference format:%@",currentTime);
     //User's current time in their preference format:7:56 pm
 
-    CGRect randFrame = CGRectMake(0, -50, kScreenWidth/2, 50);
+    CGRect randFrame = CGRectMake(0, -50, kScreenWidth, 50);
 
     UILabel *mainTime = [[UILabel alloc] initWithFrame:randFrame];
     
@@ -31,7 +31,7 @@ static void loadPreferences() {
     mainTime.numberOfLines = 1;
     mainTime.font = [UIFont fontWithName:@"Avenir-Heavy" size:26];
     mainTime.textColor = [UIColor whiteColor];
-    //mainTime.textAlignment = NSTextAlignmentCenter;
+    mainTime.textAlignment = NSTextAlignmentCenter;
 
     [self addSubview:mainTime];
 
