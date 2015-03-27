@@ -6,7 +6,7 @@ include theos/makefiles/common.mk
 
 TWEAK_NAME = JellyLockClock8
 JellyLockClock8_FILES = Tweak.xm
-JellyLockClock8_FRAMEWORKS = UIKit
+JellyLockClock8_FRAMEWORKS = Foundation UIKit CoreGraphics
 
 include $(THEOS_MAKE_PATH)/tweak.mk
 
