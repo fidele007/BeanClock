@@ -3,6 +3,7 @@
 _/
 theos/
 Packages/
+*.deb
 theos
 .theos
 obj/
