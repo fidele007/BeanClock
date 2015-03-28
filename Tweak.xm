@@ -8,12 +8,11 @@ CGFloat timeFontSize;
 
 static void loadPreferences() {
     CFPreferencesAppSynchronize(CFSTR("com.greeny.jellylockclock8"));
-    //In this case, you get the value for the key "enabled"
-    //you could do the same thing for any other value, just cast it to id and use the conversion methods
-    //if the value doesn't exist (i.e. the user hasn't changed their preferences), it is set to the value after the "?:" (in this case, YES and @"default", respectively
-    enabled = [(id)CFPreferencesCopyAppValue(CFSTR("enabled"), CFSTR("com.greeny.jellylockclock8")) boolValue];
-    timeFontSize = [(id)CFPreferencesCopyAppValue(CFSTR("timeFontSize"), CFSTR("com.greeny.jellylockclock8")) floatValue];
-    someString = [(id)CFPreferencesCopyAppValue(CFSTR("someString"), CFSTR("com.greeny.jellylockclock8")) stringValue];
+    // Use this for default values (in case they aren't set, such as the time font size)
+    // Format: If it can't copy the value, set to a default, otherwise get the value
+    enabled = !CFPreferencesCopyAppValue(CFSTR("enabled"), CFSTR("com.greeny.jellylockclock8")) ? YES : [(id)CFPreferencesCopyAppValue(CFSTR("enabled"), CFSTR("com.greeny.jellylockclock8")) boolValue];
+    timeFontSize = !CFPreferencesCopyAppValue(CFSTR("timeFontSize"), CFSTR("com.greeny.jellylockclock8")) ? 26.0 : [(id)CFPreferencesCopyAppValue(CFSTR("timeFontSize"), CFSTR("com.greeny.jellylockclock8")) floatValue];
+    someString = !CFPreferencesCopyAppValue(CFSTR("someString"), CFSTR("com.greeny.jellylockclock8")) ? @"Some string" : [(id)CFPreferencesCopyAppValue(CFSTR("someString"), CFSTR("com.greeny.jellylockclock8")) stringValue];
 }
 
 //Function to replace the existing time : with a |
