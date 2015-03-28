@@ -1,5 +1,4 @@
 #import <Preferences/Preferences.h>
-#import <Preferences/PSTableCell.h>
 #import <spawn.h>
 
 #define kWidth [[UIApplication sharedApplication] keyWindow].frame.size.width
@@ -35,15 +34,29 @@
     return self;
 }
 
--(void) respringWasTouched
-{
+-(void) respringWasTouched {
 	pid_t pid;
-int status;
-const char* args[] = { "killall", "-9", "SpringBoard", NULL };
-posix_spawn(&pid, "/usr/bin/killall", NULL, NULL, (char* const*)args, NULL);
-waitpid(pid, &status, WEXITED);
+    int status;
+    const char* args[] = { "killall", "-9", "SpringBoard", NULL };
+    posix_spawn(&pid, "/usr/bin/killall", NULL, NULL, (char* const*)args, NULL);
+    waitpid(pid, &status, WEXITED);
 	//[(SpringBoard *)[UIApplication sharedApplication] _relaunchSpringBoardNow];
 }
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[UIApplication sharedApplication] keyWindow].tintColor = nil;
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] keyWindow].tintColor = kTintColor;
+}
+
+-(void)setTitle:(id)title {
+    [super setTitle:nil];
+}
+
 @end
 
 @interface JellyLockClock8Header : PSTableCell{
