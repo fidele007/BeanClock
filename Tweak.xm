@@ -4,7 +4,7 @@
 
 bool enabled;
 NSString *someString;
-
+CGFloat timeFontSize;
 
 static void loadPreferences() {
     CFPreferencesAppSynchronize(CFSTR("com.greeny.jellylockclock8"));
@@ -12,6 +12,7 @@ static void loadPreferences() {
     //you could do the same thing for any other value, just cast it to id and use the conversion methods
     //if the value doesn't exist (i.e. the user hasn't changed their preferences), it is set to the value after the "?:" (in this case, YES and @"default", respectively
     enabled = [(id)CFPreferencesCopyAppValue(CFSTR("enabled"), CFSTR("com.greeny.jellylockclock8")) boolValue];
+    timeFontSize = [(id)CFPreferencesCopyAppValue(CFSTR("timeFontSize"), CFSTR("com.greeny.jellylockclock8")) floatValue];
     someString = [(id)CFPreferencesCopyAppValue(CFSTR("someString"), CFSTR("com.greeny.jellylockclock8")) stringValue];
 }
 
@@ -82,7 +83,7 @@ NSString* fixTimeString(NSString *timeString) {
 
 // Change the font
 -(id)_timeFont {
-    return [UIFont fontWithName:@"Avenir-Heavy" size:26];
+    return [UIFont fontWithName:@"Avenir-Heavy" size:timeFontSize];
 }
 
 %end

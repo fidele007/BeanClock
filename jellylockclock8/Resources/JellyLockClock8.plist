@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>headerCellClass</key>
+			<string>JellyLockClock8Header</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.greeny.jellylockclock8</string>
+			<key>key</key>
+			<string>enabled</string>
+			<key>label</key>
+			<string>Enabled</string>
+			<key>PostNotification</key>
+			<string>com.greeny.jellylockclock8/prefsChanged</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>placeholder</key>
+			<string>Time Font Size</string>
+			<key>defaults</key>
+			<string>com.greeny.jellylockclock8</string>
+			<key>PostNotification</key>
+			<string>com.greeny.jellylockclock8/prefsChanged</string>
+			<key>isNumeric</key>
+			<true/>
+			<key>key</key>
+			<string>timeFontSize</string>
+			<key>label</key>
+			<string>Time Font Size</string>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>JellyLockClock8</string>
+</dict>
+</plist>

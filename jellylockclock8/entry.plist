@@ -1,0 +1,10 @@
+{
+    entry = {
+	bundle = JellyLockClock8;
+	cell = PSLinkCell;
+	detail = JellyLockClock8ListController;
+	icon = JellyLockClock8.png;
+	isController = 1;
+	label = JellyLockClock8;
+    };
+}
