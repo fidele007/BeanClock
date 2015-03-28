@@ -1,3 +1,5 @@
+#import "headers.h"
+
 #define kScreenWidth [[UIScreen mainScreen] bounds].size.width
 
 bool enabled;
@@ -13,32 +15,72 @@ static void loadPreferences() {
     someString = [(id)CFPreferencesCopyAppValue(CFSTR("someString"), CFSTR("com.greeny.jellylockclock8")) stringValue];
 }
 
+//Function to replace the existing time : with a |
+NSString* fixTimeString(NSString *timeString) {
+    return [timeString stringByReplacingOccurrencesOfString:@":" withString:@" | "];
+}
+
 %hook SBFLockScreenDateView
 
-/*- (void)_updateLabels {
+// The following 3 functions are hooked for updating the label - need to minimize how many
+
+- (void)updateFormat {    
     %orig();
 
-    /*NSDate *today = [NSDate date];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    NSString *currentTime = [dateFormatter stringFromDate:today];
-    NSLog(@"User's current time in their preference format:%@",currentTime);
-    //User's current time in their preference format:7:56 pm
+    // Use the legibility label, not sure for the black colored time
+    _UILegibilityLabel *mainTime = MSHookIvar<_UILegibilityLabel*>(self, "_legibilityTimeLabel");
+    // Change the text
+    mainTime.string = fixTimeString(mainTime.string);
+    // The following is used for adjusting the size of the time since the extended text is longer than 5 chars (max)
+    CGSize stringSize = [mainTime.string sizeWithAttributes:@{NSFontAttributeName:[self _timeFont]}];
+    CGRect mainTimeFrame = mainTime.frame;
+    mainTimeFrame.size.width = stringSize.width;
+    mainTimeFrame.origin.x = (kScreenWidth-stringSize.width)/2;
+    mainTime.frame = mainTimeFrame;
+    //Same for the next 2
+}
 
-    UILabel *mainTime = MSHookIvar<UILabel*>(self, "_timeLabel");
-    
-    mainTime.text = @"test";
-    //NSLog(@"Hey, we've been called! BATMAN! %@", currentTime);
-    //mainTime.numberOfLines = 1;
-    mainTime.font = [UIFont fontWithName:@"Avenir-Heavy" size:26];
-    //mainTime.textColor = [UIColor whiteColor];
-    //mainTime.textAlignment = NSTextAlignmentCenter;
-}*/
+- (void)layoutSubviews {
+    %orig();
 
+    _UILegibilityLabel *mainTime = MSHookIvar<_UILegibilityLabel*>(self, "_legibilityTimeLabel");
+    mainTime.string = fixTimeString(mainTime.string);
+    CGSize stringSize = [mainTime.string sizeWithAttributes:@{NSFontAttributeName:[self _timeFont]}];
+    CGRect mainTimeFrame = mainTime.frame;
+    mainTimeFrame.size.width = stringSize.width;
+    mainTimeFrame.origin.x = (kScreenWidth-stringSize.width)/2;
+    mainTime.frame = mainTimeFrame;
+}
+
+-(void)_updateLabels {
+    %orig();
+
+    _UILegibilityLabel *mainTime = MSHookIvar<_UILegibilityLabel*>(self, "_legibilityTimeLabel");
+    mainTime.string = fixTimeString(mainTime.string);
+    CGSize stringSize = [mainTime.string sizeWithAttributes:@{NSFontAttributeName:[self _timeFont]}];
+    CGRect mainTimeFrame = mainTime.frame;
+    mainTimeFrame.size.width = stringSize.width;
+    mainTimeFrame.origin.x = (kScreenWidth-stringSize.width)/2;
+    mainTime.frame = mainTimeFrame;
+ }
+
+// Hide the date label perm
 -(double)dateAlphaPercentage {
     return 0;
 }
 
+// When the layout is called
+-(void)_layoutTimeLabel {
+    %orig;
+    _UILegibilityLabel *mainTime = MSHookIvar<_UILegibilityLabel*>(self, "_legibilityTimeLabel");
+    CGSize stringSize = [mainTime.string sizeWithAttributes:@{NSFontAttributeName:[self _timeFont]}];
+    CGRect mainTimeFrame = mainTime.frame;
+    mainTimeFrame.size.width = stringSize.width;
+    mainTimeFrame.origin.x = (kScreenWidth-stringSize.width)/2;
+    mainTime.frame = mainTimeFrame;
+}
+
+// Change the font
 -(id)_timeFont {
     return [UIFont fontWithName:@"Avenir-Heavy" size:26];
 }
